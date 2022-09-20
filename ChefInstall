@@ -5,62 +5,61 @@
 # yum install <chef_workstation> -y
 # which chef
 # chef --version
-# mkdir cookbooks -- You can't change or give another name 
-# cd cookbooks
+--------------------------------------------------------------------------------------
+Chef-Server => https://manage.chef.io/login
+
+Chef Server is going to be a mediator for the code or cookbooks.
+-> 1st, Create a one account in chef-server - https://manage.chef.io/login
+-> Now, Upload your cookbooks from workstation to chef-server.
+-> Now, Attach the nodes to chef-server via bootstrap process.
+-> Apply cookbook from chef server to node.
+
+Process --
+ -> Create a account in chef-server (https://manage.chef.io/login)
+ -> Go to chef account -> Create an Organization -> Stater Kit -> Download Stater Kit
+ -> Unzip Stater kit -> (chef-repo)
+
+--------------------------------------------------------------------------------------
+** How to upload/copy-paste the file from Local Windows to AWS Linux Machine
+-> Download "winscp" -- https://winscp.net/download/WinSCP-5.21.2-Setup.exe
+
+
+--------------------------------------------------------------------------------------
+** Open centos using putty --
+Knife File Location --> # cat /home/centos/chef-repo/.chef/config.rb
+			# knife ssl check
+
+# /home/ec2-user/chef-repo/cookbooks
+
+Syntax --  knife bootstrap <private_ip_of_Node1> --ssh-user <node_user_name> --sodo -i <Node private key in pem file> -N <Node_Name>  ==> Bootstrap Process
+# knife bootstrap 172.31.21.164 --ssh-user ec2-user --sudo -i Ke-1.pem -N MyNode2
+
 # chef generate cookbook test-cookbooks -- You can create cookbooks. You can give another name of test-cookbooks
-# yum install tree -y -- to check the cookbook, you have to download and install tree
-# tree -- to check the cookbooks
 # cd test-cookbook -- Whenever we will create recipe that time we can go inside this test-cookbooks else all the work will be done from out side the test-cookbook
 # chef generate recipe recipe-1 -- You can create recipe. You can give another name of recipe-1
-# tree -- to show the recipe
-# cd ..
 # vi test-cookbooks/recipes/recipe-1.rb
-	** Enter the ruby language code--
-	*** To Install tree***
-	package 'tree' do
-	action :install
-	end			
 
-	***To Create a file***
-	file '/myfile' do
-	content 'Welcome to Chef'
-	action :create
-	owner 'root'
-	group 'root'
-	end
+** How to execute linux command in chef
+----------------------------------------------------------
+[Note:-  Dash(-)= It will describe the output in different line.But if we want output in single line then we can use tild(~) symbol instead of Dash(-), EOH = End of Here]
+	
+execute "Run Linux Script" do 	
+ command <<-EOH  
+ mkdir /NewFolder
+ touch /NewFile
+ EOH
+end
+
+
 # chef exec ruby -c test-cookbooks/recipes/recipe-1.rb --> to test the code
-# chef-client -zr "recipe[test-cookbooks::recipe-1]" -->To call the chef client . z=Local Machine, r-Run List
-# ls /
+# knife cookbook upload test-cookbooks => Upload the Test_Cookbook into chef Server  
+# knife cookbook list => To check the cookbook list of chef-server 
++--------------------------------------------------------------------------+
+| # knife node run_list set node1 "recipe[Test_Cookbook1::Recipe-1]"       | ==> It will store/load the particular recipe of a cookbook to the Run List of Node1 via +--------------------------------------------------------------------------+				
++--------------------------------------------------------------------------+		Here node1 - name of the node which is in chef server
+											Test_Cookbook1 - name of cookbook which is in chef server 
+# ls 
 # cat recipe-1	
 				
 ** Chef Server -- It will be install AWS or Another Remote Location.
 
-
-
-** Deploying an Apache Server
--------------------------------
-# chef generate cookbook apache-cookbook
-# ls
-# cd apache-cookbook
-# chef generate recipe apache-recipe
-# tree 
-# cd ..
-# ls
-# vi apache-cookbook/recipes/apoache-recipe.rb
-	package 'httpd' do
-	action :install
-	end
-
-	file '/var/www/html/index.html' do
-	content 'Welcome to Technical Guftgu'
-	action :create
-	end
-
-
-	service 'httpd' do
-	action [:enable, :start]
-	end
-
-
-# chef exec ruby -c apache-cookbook/recipes/apoache-recipe.rb
-# chef-client -zr "recipe[apache-cookbooks::apoache-recipe]"
