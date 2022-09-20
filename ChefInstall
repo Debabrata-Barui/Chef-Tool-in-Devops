@@ -1,4 +1,4 @@
-  # ec2-user
+        # ec2-user
 	# sudo su
 	# yum update -y
    	# wget https://packages.chef.io/files/stable/chef-workstation/22.7.1006/amazon/2/chef-workstation-22.7.1006-1.el7.x86_64.rpm 
