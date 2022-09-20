@@ -1,37 +1,37 @@
-        # ec2-user
-	# sudo su
-	# yum update -y
-   	# wget https://packages.chef.io/files/stable/chef-workstation/22.7.1006/amazon/2/chef-workstation-22.7.1006-1.el7.x86_64.rpm 
-	# yum install <chef_workstation> -y
-	# which chef
-	# chef --version
-	# mkdir cookbooks -- You can't change or give another name 
-	# cd cookbooks
-	# chef generate cookbook test-cookbooks -- You can create cookbooks. You can give another name of test-cookbooks
-	# yum install tree -y -- to check the cookbook, you have to download and install tree
-	# tree -- to check the cookbooks
-	# cd test-cookbook -- Whenever we will create recipe that time we can go inside this test-cookbooks else all the work will be done from out side the test-cookbook
-	# chef generate recipe recipe-1 -- You can create recipe. You can give another name of recipe-1
-	# tree -- to show the recipe
-	# cd ..
-	# vi test-cookbooks/recipes/recipe-1.rb
-		** Enter the ruby language code--
-		*** To Install tree***
-		package 'tree' do
-		action :install
-		end			
-		
-		***To Create a file***
-		file '/myfile' do
-		content 'Welcome to Chef'
-		action :create
-		owner 'root'
-		group 'root'
-		end
-	# chef exec ruby -c test-cookbooks/recipes/recipe-1.rb --> to test the code
-	# chef-client -zr "recipe[test-cookbooks::recipe-1]" -->To call the chef client . z=Local Machine, r-Run List
-	# ls /
-	# cat recipe-1	
+# ec2-user
+# sudo su
+# yum update -y
+# wget https://packages.chef.io/files/stable/chef-workstation/22.7.1006/amazon/2/chef-workstation-22.7.1006-1.el7.x86_64.rpm 
+# yum install <chef_workstation> -y
+# which chef
+# chef --version
+# mkdir cookbooks -- You can't change or give another name 
+# cd cookbooks
+# chef generate cookbook test-cookbooks -- You can create cookbooks. You can give another name of test-cookbooks
+# yum install tree -y -- to check the cookbook, you have to download and install tree
+# tree -- to check the cookbooks
+# cd test-cookbook -- Whenever we will create recipe that time we can go inside this test-cookbooks else all the work will be done from out side the test-cookbook
+# chef generate recipe recipe-1 -- You can create recipe. You can give another name of recipe-1
+# tree -- to show the recipe
+# cd ..
+# vi test-cookbooks/recipes/recipe-1.rb
+	** Enter the ruby language code--
+	*** To Install tree***
+	package 'tree' do
+	action :install
+	end			
+
+	***To Create a file***
+	file '/myfile' do
+	content 'Welcome to Chef'
+	action :create
+	owner 'root'
+	group 'root'
+	end
+# chef exec ruby -c test-cookbooks/recipes/recipe-1.rb --> to test the code
+# chef-client -zr "recipe[test-cookbooks::recipe-1]" -->To call the chef client . z=Local Machine, r-Run List
+# ls /
+# cat recipe-1	
 				
 ** Chef Server -- It will be install AWS or Another Remote Location.
 
